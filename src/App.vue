@@ -6,7 +6,6 @@
         </v-navigation-drawer>
 
         <v-toolbar clipped-left fixed app>
-            <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
             <v-avatar>
                 <img src="/logo/icons8-docker-filled-50.svg">
             </v-avatar>
@@ -15,31 +14,6 @@
             <v-spacer></v-spacer>
 
             <v-toolbar-items>
-                <v-btn flat to="/">Home</v-btn>
-                <v-btn flat to="/containers">
-                    <v-badge color="teal">
-                      <span slot="badge" small>{{ CONTAINERS.length }}</span>
-                      <span>Containers</span>
-                    </v-badge>
-                </v-btn>
-                <v-btn flat to="/images">
-                    <v-badge color="teal">
-                      <span slot="badge" small>{{ IMAGES.length }}</span>
-                      <span>Images</span>
-                    </v-badge>
-                </v-btn>
-                <v-btn flat to="/networks">
-                    <v-badge color="teal">
-                      <span slot="badge" small>{{ NETWORKS.length }}</span>
-                      <span>Networks</span>
-                    </v-badge>
-                </v-btn>
-                <v-btn flat to="/volumes">
-                    <v-badge color="teal">
-                      <span slot="badge" small>{{ VOLUMES.length }}</span>
-                      <span>Volumes</span>
-                    </v-badge>
-                </v-btn>
                 <v-btn flat icon href="https://github.com/tduval/Dockpier" target="_blank" >
                   <img src="/logo/github-circle.svg" />
                 </v-btn>

@@ -11,15 +11,10 @@
             <v-icon>cached</v-icon>
         </v-btn>
         <v-spacer></v-spacer>
-        <v-flex xs3>
-            <v-text-field placeholder="Search..." append-icon="search"
-            single-line clearable v-model="searchValue">
-            </v-text-field>
-        </v-flex>
     </v-layout>
 
-    <v-container fluid grid-list-xl>
-        <v-layout row justify-space-around wrap>
+    <v-container fuild grid-list-xl>
+        <v-layout row wrap>
             <vue-element-loading :active="loading" color="#42b983"/>
 
             <v-flex v-for="container in CONTAINERS" :key="container.id" xs3>
@@ -58,6 +53,7 @@ export default {
         return this.$store.state.containers.filter(c =>
           c.Name.toString().includes(this.searchValue.toString().toLowerCase()));
       }
+
       return this.$store.state.containers;
     },
   },

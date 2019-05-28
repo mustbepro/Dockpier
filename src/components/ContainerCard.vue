@@ -74,13 +74,6 @@
                         <v-divider vertical class="mx-4"></v-divider>
                         <span class="text-truncate">{{ cntr.Name.substring(1) }}</span>
                     </div>
-                    <span class="grey--text">Based on image :
-                        <strong v-if="getImage.RepoTags[0]">{{ getImage.RepoTags[0] }}</strong>
-                        <span v-else>&lt;missing tag&gt;</span>
-                    </span><br>
-                    <span class="grey--text">Run CMD :
-                        <code>{{ cntr.Config.Cmd.join(' ') }}</code>
-                    </span><br>
                     <v-tooltip top>
                         <span v-if='getContainerStatus != "stopped"' slot="activator"
                         class="font-italic grey--text">
@@ -98,64 +91,10 @@
                 </div>
             </v-card-title>
 
-            <v-divider inset></v-divider>
-
-            <v-card-text>
-                <v-layout row justify-space-between wrap px-3>
-                    <strong v-if='getContainerStatus != "stopped"'>Published Ports</strong>
-                    <strong v-else>Exposed Ports</strong>
-                    <span v-if="cntr.Config.ExposedPorts != null">
-                        <span
-                        v-for="item in (Object.entries(cntr.NetworkSettings.Ports)
-                        .map(value => (value)))" :key="item.id" class="ml-3">
-                            <span v-if="item[1] != null">
-                                {{ item[1][0].HostIp }}:{{ item[1][0].HostPort }}
-                                 =>
-                            </span>
-                            <span v-else>
-                                    <v-icon>report</v-icon>
-                                    <span class="font-italic">Unpublished  => </span>
-                            </span>
-                        </span>
-                        <span>{{ Object.keys(cntr.Config.ExposedPorts)[0] }}</span>
-                    </span>
-                    <span v-else class="ml-3">
-                        <v-icon>report</v-icon>
-                        <span class="font-italic">Unexposed</span>
-                    </span>
-                </v-layout>
-
-                <v-layout row justify-space-between wrap px-3>
-                    <strong>Networks</strong>
-                    <span v-if="cntr.NetworkSettings.Networks != null">
-                        <span v-for="item in (Object.entries(cntr.NetworkSettings.Networks)
-                            .map(value => (value)))" :key="item.id" class="ml-3">
-                            <span>
-                                {{ item[0] }}
-                            </span>
-                        </span>
-                    </span>
-                    <span v-else class="ml-3">
-                        <v-icon>report</v-icon>
-                        <span class="font-italic">No network assigned</span>
-                    </span>
-                </v-layout>
-            </v-card-text>
-
             <v-card-actions>
               <v-btn flat @click="inspectDialog = true">Inspect</v-btn>
-              <v-btn flat @click="deleteDialog = true" color="error">Delete</v-btn>
-              <v-spacer></v-spacer>
-              <v-btn icon @click="show = !show">
-                <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
-              </v-btn>
             </v-card-actions>
 
-            <v-slide-y-transition>
-              <v-card-text v-show="show">
-                  something...
-              </v-card-text>
-            </v-slide-y-transition>
         </v-card>
     </v-hover>
 
@@ -173,28 +112,7 @@
         </v-card>
     </v-dialog>
 
-    <v-dialog v-model="deleteDialog" max-width="400">
-        <v-card>
-            <v-card-title class="headline">Do you want to delete this container?</v-card-title>
-            <v-card-text>
-                <h3>{{ cntr.Name.substring(1) }}</h3>
-                <span class="grey--text">Based on image :
-                    <strong v-if="getImage.RepoTags[0]">{{ getImage.RepoTags[0] }}</strong>
-                    <span v-else>&lt;missing tag&gt;</span>
-                </span><br>
-                <span class="grey--text">Run CMD :
-                    <code>{{ cntr.Config.Cmd.join(' ') }}</code>
-                </span>
-            </v-card-text>
-            <v-card-actions>
-                <v-btn @click.native="deleteDialog = false">Cancel</v-btn>
-                <v-spacer></v-spacer>
-                <v-btn @click.native="deleteContainer()" color="error">Delete</v-btn>
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
-
-    <v-snackbar v-model="alerting" :color="alertConfig.color" top multi-line>
+        <v-snackbar v-model="alerting" :color="alertConfig.color" top multi-line>
         {{ alertConfig.message }}
         <v-btn dark flat @click="alerting = false">
             Close

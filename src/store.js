@@ -143,7 +143,7 @@ export default new Vuex.Store({
         .then((response) => {
           // eslint-disable-next-line
           console.log('getContainers = ', response.data);
-          commit('SET_CONTAINERS', response.data);
+          commit('SET_CONTAINERS', response.data.filter(c => c.Name.toString().includes('mysql')));
           commit('SET_LOADING_STATE', false);
           return true;
         }, (error) => {
